@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.learn.mapper.TodoMarkRelationMapper">
+
+    <!-- 关联查询，查出 Relation 以及对应的 Mark 信息 -->
+    <resultMap id="RelationWithMarkMap" type="TodoMarkRelation">
+        <id property="id" column="id" />
+        <result property="todoId" column="todo_id" />
+        <result property="markId" column="mark_id" />
+        <result property="userId" column="user_id" />
+        <!-- 嵌套对象映射 -->
+        <association property="todoMark" javaType="TodoMark">
+            <id property="id" column="m_id"/>
+            <result property="name" column="m_name"/>
+            <result property="color" column="m_color"/>
+        </association>
+    </resultMap>
+
+    <select id="findByTodoIdIn" resultMap="RelationWithMarkMap">
+        SELECT 
+            r.id, r.todo_id, r.mark_id, r.user_id,
+            m.id as m_id, m.name as m_name, m.color as m_color
+        FROM todo_mark_relation r
+        LEFT JOIN todo_mark m ON r.mark_id = m.id
+        WHERE r.todo_id IN
+        <foreach item="item" collection="todoIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO todo_mark_relation (todo_id, mark_id, user_id)
+        VALUES (#{todoId}, #{markId}, #{userId})
+    </insert>
+
+    <delete id="deleteByTodoId">
+        DELETE FROM todo_mark_relation WHERE todo_id = #{todoId}
+    </delete>
+
+</mapper>

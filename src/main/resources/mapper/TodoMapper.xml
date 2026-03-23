@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.learn.mapper.TodoMapper">
+
+    <select id="findAll" resultType="Todo">
+        SELECT * FROM todo ORDER BY created_at DESC
+    </select>
+
+    <select id="findById" resultType="Todo">
+        SELECT * FROM todo WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO todo (user_id, title, content, status, tags, plannedFinishTime, completed, description, reminders)
+        VALUES (#{userId}, #{title}, #{content}, #{status}, #{tags}, #{plannedFinishTime}, #{completed}, #{description}, #{reminders})
+    </insert>
+
+    <update id="update">
+        UPDATE todo
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="completed != null">completed = #{completed},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="plannedFinishTime != null">plannedFinishTime = #{plannedFinishTime},</if>
+            <if test="reminders != null">reminders = #{reminders},</if>
+            updated_at = CURRENT_TIMESTAMP
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM todo WHERE id = #{id}
+    </delete>
+
+</mapper>

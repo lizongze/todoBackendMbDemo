@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    # 替换成您的本地 PG 配置
+    url: jdbc:postgresql://localhost:5432/todo_db
+    username: postgres
+    password: postgres_password
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      # 让 Spring Boot 启动时执行 schema.sql 里的建表语句 (因为去掉了 JPA 的 ddl-auto)
+      mode: always
+
+mybatis:
+  # XML 映射文件所在的路径
+  mapper-locations: classpath:mapper/*.xml
+  # 实体类所在的包，这样在 XML 里写类型就可以直接写 Todo 而不用写全路径名
+  type-aliases-package: com.example.learn.entity
+  configuration:
+    # 开启驼峰命名自动映射 (如数据库的 user_id 自动映射到实体类的 userId)
+    map-underscore-to-camel-case: true
+    # 打印 SQL 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
