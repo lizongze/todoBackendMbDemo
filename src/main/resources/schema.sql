@@ -13,6 +13,13 @@ CREATE TABLE IF NOT EXISTS todo (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 补齐已有 todo 表中的待办字段
+ALTER TABLE todo
+    ADD COLUMN IF NOT EXISTS planned_finish_time TIMESTAMP,
+    ADD COLUMN IF NOT EXISTS completed BOOLEAN,
+    ADD COLUMN IF NOT EXISTS description TEXT,
+    ADD COLUMN IF NOT EXISTS reminders TEXT[];
+
 -- todo_mark 表
 CREATE TABLE IF NOT EXISTS todo_mark (
     id BIGSERIAL PRIMARY KEY,

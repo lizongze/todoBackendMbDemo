@@ -24,8 +24,9 @@ public class Todo {
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime plannedFinishTime;
-  
-  private String reminders;
+
+  @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+  private String[] reminders;
 
   private List<TodoMarkRelation> markRelations;
 
@@ -36,7 +37,7 @@ public class Todo {
         this.markRelations = new ArrayList<>();
       }
       this.markRelations.clear();
-      
+
       for (Long markId : todoMarkIds) {
         TodoMark mark = new TodoMark();
         mark.setId(markId);
@@ -108,6 +109,12 @@ public class Todo {
   public void setUserId(Long userId) { this.userId = userId; }
   public LocalDateTime getPlannedFinishTime() { return plannedFinishTime; }
   public void setPlannedFinishTime(LocalDateTime plannedFinishTime) { this.plannedFinishTime = plannedFinishTime; }
-  public String getReminders() { return reminders; }
-  public void setReminders(String reminders) { this.reminders = reminders; }
+
+  public String[] getReminders() {
+    return reminders;
+  }
+
+  public void setReminders(String[] reminders) {
+    this.reminders = reminders;
+  }
 }
