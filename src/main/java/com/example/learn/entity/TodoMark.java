@@ -12,6 +12,15 @@ public class TodoMark {
     public void setUserId(Long userId) { this.userId = userId; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    public String getTitle() {
+        return name;
+    }
+
+    public void setTitle(String title) {
+        this.name = title;
+    }
+
+
     public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
 }
