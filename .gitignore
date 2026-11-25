@@ -1,0 +1,14 @@
+# Maven build output
+/target/
+
+# IntelliJ IDEA local settings
+/.idea/
+/out/
+*.iml
+*.iws
+*.ipr
+
+# Local logs and OS files
+*.log
+.DS_Store
+Thumbs.db
