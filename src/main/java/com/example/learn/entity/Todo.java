@@ -38,13 +38,14 @@ public class Todo {
       }
       this.markRelations.clear();
 
-      for (Long markId : todoMarkIds) {
+      todoMarkIds.forEach(markId -> {
         TodoMark mark = new TodoMark();
         mark.setId(markId);
         TodoMarkRelation relation = new TodoMarkRelation(this.id, mark.getId());
         relation.setTodoMark(mark);
         this.markRelations.add(relation);
-      }
+      });
+
     }
   }
 
